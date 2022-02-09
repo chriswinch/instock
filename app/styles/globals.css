@@ -1,10 +1,12 @@
 :root {
     --primary-font: 'Unica One', cursive;
     --secondary-font: 'Crimson Pro', serif;
+    --border-radius: 4px;
+    --black: #1A1820;
 }
 
 body {
-    background-color: #1A1820;
+    background-color: var(--black);
     color: #fff;
     font-family: var(--secondary-font);
 }
@@ -17,4 +19,22 @@ h1, h2, h3, h4, h5, h6 {
 a {
     color: green;
     text-decoration: underline;
+}
+
+button {
+    border: 0;
+    border-radius: var(--border-radius);
+    padding: 12px 24px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+input[type="text"] {
+    background-color: #fff;
+    border: 0;
+    border-radius: var(--border-radius);
+    padding: 12px;
+    width: 100%;
 }

@@ -1,0 +1,33 @@
+.home {}
+
+.home__intro-text {
+    padding: 50px 0;
+    font-size: 3vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.home__search-form {
+    margin: 0 auto 100px;
+    max-width: 1200px;
+}
+
+.home__search-form form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 30px;
+}
+
+.home__search-form label {
+    margin-right: 16px;
+    width: 100%;
+}
+
+.home__search-form button {}
+
+.home__main-ctas {
+    margin: 0 auto 100px;
+    max-width: 1200px;
+    display: flex;
+}

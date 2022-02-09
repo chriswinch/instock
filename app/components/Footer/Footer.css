@@ -2,3 +2,11 @@ footer {
     background: pink;
     padding: 20px 40px;
 }
+
+footer a {
+    color: var(--black);
+}
+
+footer h4 {
+    font-size: 1.4rem;
+}
