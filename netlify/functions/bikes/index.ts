@@ -11,7 +11,7 @@ const handler: Handler = async (event, context) => {
             args: [
                 '--disable-features=AudioServiceOutOfProcess'
             ],
-            executablePath: await process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath,
+            executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath,
             headless: chromium.headless
         });
 
