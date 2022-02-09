@@ -1,12 +1,11 @@
-import { Handler } from "@netlify/functions";
+import { Handler } from '@netlify/functions';
 
 import chromium from "chrome-aws-lambda";
 import puppeteer from 'puppeteer-core';
 
 const handler: Handler = async (event, context) => {
-    let result = null;
     let browser = null;
-
+    let result = null;
     try {
         browser = await puppeteer.launch({
             args: [
@@ -18,15 +17,17 @@ const handler: Handler = async (event, context) => {
 
         let page = await browser.newPage();
 
-        await page.goto('https://example.com');
+        await page.goto('https://google.com');
+
+        // await page.waitForNavigation({waitUntil: 'networkidle2'})
 
         result = await page.title();
     } catch (err) {
         let message = '';
-        if (typeof err === 'string') {
-            message = err;
-        } else if (err instanceof Error) {
+        if (err instanceof Error) {
             message = err.message;
+        } else if (typeof err === 'string') {
+            message = err;
         }
         return {
             statusCode: 500,
@@ -36,7 +37,7 @@ const handler: Handler = async (event, context) => {
         }
     } finally {
         if (browser !== null) {
-        await browser.close();
+            await browser.close();
         }
     }
 
@@ -45,7 +46,7 @@ const handler: Handler = async (event, context) => {
         body: JSON.stringify({
             result
         })
-    };
-};
+    }
+}
 
-export { handler }
+export { handler}
