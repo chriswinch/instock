@@ -17,7 +17,7 @@ const handler: Handler = async (event, context) => {
 
         let page = await browser.newPage();
 
-        await page.goto('https://google.com');
+        await page.goto('https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock');
 
         // await page.waitForNavigation({waitUntil: 'networkidle2'})
 
