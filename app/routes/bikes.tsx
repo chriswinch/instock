@@ -6,7 +6,31 @@ export const links: LinksFunction = () => ([
     { rel: "stylesheet", href: styles }
 ]);
 
-const mockBikeData = [
+interface Bike {
+    id: number
+    title: string
+    type: string
+    store: string
+    price: number
+    priceAsString: string
+    created: string
+    photo: string
+    link: string
+}
+
+interface Query {
+    search: string
+    type: string
+    brand: string
+    price: string
+}
+
+interface LoaderData {
+    bikes: Bike[]
+    query: Query
+}
+
+const mockBikeData: Bike[] = [
     {
         "id": 2904,
         "title": "Specialized S Works Enduro 29er XX1 Eagle AXS 2021 Red/Spectraflair",
@@ -64,12 +88,12 @@ const mockBikeData = [
     }
 ];
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
     const url = new URL(request.url);
-    const search = url.searchParams.get('search');
-    const brand = url.searchParams.get('brand');
-    const type = url.searchParams.get('type');
-    const price = url.searchParams.get('price');
+    const search = url.searchParams.get('search') || '';
+    const brand = url.searchParams.get('brand') || '';
+    const type = url.searchParams.get('type') || '';
+    const price = url.searchParams.get('price') || '';
 
     return {
         query: {
@@ -83,10 +107,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function Bikes() {
-    const { bikes, query } = useLoaderData();
+    const { bikes, query } = useLoaderData<LoaderData>();
 
     return (
         <div className="bikes">
+            <div className="bikes__intro">
+                <h2>Bikes</h2>
+            </div>
             <div className="bikes__search-form">
                 <Form method="get">
                     <label htmlFor="search">
@@ -103,6 +130,19 @@ export default function Bikes() {
                     </label>
                     <button type="submit">Search</button>
                 </Form>
+            </div>
+            <div className="bikes__list">
+                {bikes.map(bike => (
+                    <a className="bikes__list-item" key={bike.id} href={bike.link}>
+                        <div className="bikes__list-item-image">
+                            <img src={bike.photo} alt={bike.title} />
+                        </div>
+                        <div className="bikes__list-item-info">
+                            <h3 className="bikes__list-item-info-title">{bike.title}</h3>
+                            <p className="bikes__list-item-info-price">{bike.priceAsString}</p>
+                        </div>
+                    </a>
+                ))}
             </div>
         </div>
     );
