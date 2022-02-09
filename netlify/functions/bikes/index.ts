@@ -2,6 +2,12 @@ import { Handler } from '@netlify/functions';
 
 import chromium from "chrome-aws-lambda";
 import puppeteer from 'puppeteer-core';
+import leisureLakes from './leisurelakes';
+
+/**
+ * Can't get this to run on netlify
+ * Similar issue to https://answers.netlify.com/t/memory-usage-puppeteer-function-or-repo-based/5613
+ */
 
 const handler: Handler = async (event, context) => {
     let browser = null;
@@ -19,9 +25,8 @@ const handler: Handler = async (event, context) => {
 
         await page.goto('https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock');
 
-        // await page.waitForNavigation({waitUntil: 'networkidle2'})
+        result = await leisureLakes(page);
 
-        result = await page.title();
     } catch (err) {
         let message = '';
         if (err instanceof Error) {

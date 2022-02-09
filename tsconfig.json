@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "netlify/functions/hello/index.ts"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "netlify/functions/hello/index.ts", "node_modules/@types/puppeteer/index.d.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "isolatedModules": true,
