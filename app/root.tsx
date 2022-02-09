@@ -20,8 +20,11 @@ export const meta: MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => ([
-    { rel: "stylesheet", href: resetStyles },
-    { rel: "stylesheet", href: globalStyles },
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com'},
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Unica+One&display=swap' },
+    { rel: 'stylesheet', href: resetStyles },
+    { rel: 'stylesheet', href: globalStyles },
     ...headerLinks(),
     ...footerLinks()
 ]);

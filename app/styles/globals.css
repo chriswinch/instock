@@ -1,0 +1,20 @@
+:root {
+    --primary-font: 'Unica One', cursive;
+    --secondary-font: 'Crimson Pro', serif;
+}
+
+body {
+    background-color: #1A1820;
+    color: #fff;
+    font-family: var(--secondary-font);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--primary-font);
+    text-transform: uppercase;
+}
+
+a {
+    color: green;
+    text-decoration: underline;
+}
