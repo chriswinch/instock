@@ -9,13 +9,20 @@ const leisureLakes = async (page: Page) => {
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
         const title = await product.$eval('.frItemName', (el) => el.innerText);
-        const price = await product.$eval('.nowPrice-betterSearch', (el) => el.innerText);
-        const image = await product.$eval('.facetItemImg img', (el) => el.src);
+        const priceRaw = await product.$eval('.nowPrice-betterSearch', (el) => el.innerText);
+        const price = Number((priceRaw.replace(/[^0-9]/g, '') / 100).toFixed(2));
+        const photo = await product.$eval('.facetItemImg img', (el) => el.src);
         const link = await product.$eval('.facetItemImg', (el) => el.href);
+        const type = 'mountain-bikes';
+        const store = 'leisurelakes';
+        const priceAsString = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(price);
         results.push({
             title,
+            type,
+            store,
             price,
-            image,
+            priceAsString,
+            photo,
             link
         });
     }

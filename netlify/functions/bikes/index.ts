@@ -1,17 +1,25 @@
 import { Handler } from '@netlify/functions';
+import { PrismaClient } from '@prisma/client';
 
 import chromium from "chrome-aws-lambda";
 import puppeteer from 'puppeteer-core';
 import leisureLakes from './leisurelakes';
+
+const prisma = new PrismaClient();
 
 /**
  * Can't get this to run on netlify
  * Similar issue to https://answers.netlify.com/t/memory-usage-puppeteer-function-or-repo-based/5613
  */
 
+const urls = {
+    leisurelakes: {
+        'mountain-bikes': 'https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock',
+    }
+}
+
 const handler: Handler = async (event, context) => {
     let browser = null;
-    let result = null;
     try {
         browser = await puppeteer.launch({
             args: [
@@ -23,10 +31,16 @@ const handler: Handler = async (event, context) => {
 
         let page = await browser.newPage();
 
-        await page.goto('https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock');
+        await page.goto(urls['leisurelakes']['mountain-bikes']);
 
-        result = await leisureLakes(page);
-
+        const results = await leisureLakes(page);
+        await prisma.bike.deleteMany({
+            where: {
+                store: 'leisurelakes',
+                type: 'mountain-bikes'
+            }
+        })
+        await prisma.bike.createMany({ data: results });
     } catch (err) {
         let message = '';
         if (err instanceof Error) {
@@ -49,7 +63,7 @@ const handler: Handler = async (event, context) => {
     return {
         statusCode: 200,
         body: JSON.stringify({
-            result
+            success: true
         })
     }
 }

@@ -6,18 +6,19 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Bike {
-    id String @id @default(cuid())
-    created DateTime @default(now())
-    title String
-    type String
-    store String
-    price Int
-    priceAsString String
-    photo String
-    link String
+  id            String   @id @default(cuid())
+  created       DateTime @default(now())
+  title         String
+  type          String
+  store         String
+  price         Float
+  priceAsString String
+  photo         String
+  link          String
 }
