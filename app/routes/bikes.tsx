@@ -85,6 +85,10 @@ export default function Bikes() {
         setSearchParams({ ...searchObj, page: page.toString() });
     }
 
+    const resetPagination = () => {
+        setSearchParams({});
+    };
+
     return (
         <div className="bikes">
             <div className="bikes__intro">
@@ -93,31 +97,30 @@ export default function Bikes() {
 
             <SearchForm query={query} />
 
-            {bikes.length > 0 ? (
-                <>
-                    <div className="bikes__list">
-                        {bikes.map(bike => (
-                            <a className="bikes__list-item" key={bike.id} href={bike.link} target="_blank" rel="noopener noreferrer">
-                                <div className="bikes__list-item-image">
-                                    <img src={bike.photo} alt={bike.title} />
-                                </div>
-                                <div className="bikes__list-item-info">
-                                    <p className="bikes__list-item-info-price">{bike.priceAsString}</p>
-                                    <h3 className="bikes__list-item-info-title">{bike.title}</h3>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                    <div className="bikes__pagination">
-                        <button onClick={() => handlePaginate(Number(pageNum) - 1)} disabled={!pageNum || Number(pageNum) <= 1}>Previous</button>
-                        <button onClick={() => handlePaginate(Number(pageNum) + 1)}>Next Page</button>
-                    </div>
-                </>
-            ) : (
-                <div className="bikes__empty">
-                    <h3>No bikes found</h3>
+                    {bikes.length > 0 ? (
+                        <div className="bikes__list">
+                            {bikes.map(bike => (
+                                <a className="bikes__list-item" key={bike.id} href={bike.link} target="_blank" rel="noopener noreferrer">
+                                    <div className="bikes__list-item-image">
+                                        <img src={bike.photo} alt={bike.title} />
+                                    </div>
+                                    <div className="bikes__list-item-info">
+                                        <p className="bikes__list-item-info-price">{bike.priceAsString}</p>
+                                        <h3 className="bikes__list-item-info-title">{bike.title}</h3>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="bikes__empty">
+                            <h3>No bikes found</h3>
+                            <button onClick={resetPagination}>View All Bikes</button>
+                        </div>
+                    )}
+                <div className="bikes__pagination">
+                    <button onClick={() => handlePaginate(Number(pageNum) - 1)} disabled={!pageNum || Number(pageNum) <= 1}>Previous</button>
+                    <button onClick={() => handlePaginate(Number(pageNum) + 1)} disabled={!bikes.length}>Next Page</button>
                 </div>
-            )}
         </div>
     );
 };

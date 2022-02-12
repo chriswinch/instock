@@ -55,5 +55,9 @@
     margin: 0 auto 100px;
     text-align: center;
     width: 100%;
+}
+
+.bikes__empty h3 {
     font-size: 2.5rem;
+    margin-bottom: 30px;
 }
