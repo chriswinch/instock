@@ -9,7 +9,8 @@ export const links: LinksFunction = () => ([
 const Header = () => {
     return (
         <header className="header">
-            <Link to="/"><h1>InStock</h1></Link>
+            <Link to="/" className="header__link header__logo"><h1>InStock</h1></Link>
+            <Link to="/bikes" className="header__link">Bikes</Link>
         </header>
     );
 }
