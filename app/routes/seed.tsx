@@ -29,11 +29,11 @@ const Seed = () => {
             </div>
 
             <div className="seed__list-wrapper">
-                <h3>Leisure Lakes</h3>
+                <h3>Chain Reactions</h3>
                 <div className="seed__list">
-                    <button>Mountain Bikes</button>
-                    <button>Road / CX Bikes</button>
-                    <button>Hybrid Bikes</button>
+                    <button onClick={() => handleSeed('chainreaction', 'mountain-bikes')}>Mountain Bikes</button>
+                    <button onClick={() => handleSeed('chainreaction', 'road-bikes')}>Road / CX Bikes</button>
+                    <button onClick={() => handleSeed('chainreaction', 'hybrid-bikes')}>Hybrid Bikes</button>
                 </div>
             </div>
         </div>

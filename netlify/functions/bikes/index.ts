@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import chromium from "chrome-aws-lambda";
 import puppeteer from 'puppeteer-core';
 import leisureLakes from './leisurelakes';
+import chainReaction from './chainreaction';
 
 const prisma = new PrismaClient();
 interface Urls {
@@ -18,6 +19,16 @@ const urls: Urls = {
         'hybrid-bikes': 'https://www.leisurelakesbikes.com/bikes/hybrid-bikes/instock',
         'road-bikes': 'https://www.leisurelakesbikes.com/road-bike/bikes/road-racing-bikes/instock',
     },
+    chainreaction: {
+        'mountain-bikes': 'https://www.chainreactioncycles.com/mtb/mountain-bikes?f=2247',
+        'road-bikes': 'https://www.chainreactioncycles.com/road/road-bikes?f=2247',
+        'hybrid-bikes': 'https://www.chainreactioncycles.com/city/hybrid-city-bikes?f=2247',
+    }
+}
+
+const shopFuncs: {[key: string]: Function } = {
+    leisurelakes: leisureLakes,
+    chainreaction: chainReaction
 }
 
 /**
@@ -46,10 +57,9 @@ const handler: Handler = async (event, context) => {
                 });
 
                 let page = await browser.newPage();
+                const url = urls[store][type];
 
-                await page.goto(urls[store][type]);
-
-                const results = await leisureLakes(page, type);
+                const results = await shopFuncs[store](page, url, type);
                 await prisma.bike.deleteMany({
                     where: {
                         store,
