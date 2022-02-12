@@ -11,22 +11,7 @@
     font-weight: 700;
 }
 
-.bikes__search-form {
-    margin: 50px auto 100px;
-    max-width: 1200px;
-}
 
-.bikes__search-form form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 30px;
-}
-
-.bikes__search-form label {
-    margin-right: 12px;
-    width: 100%;
-}
 
 .bikes__list {
     padding: 0 30px;
