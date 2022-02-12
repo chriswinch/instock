@@ -24,9 +24,16 @@ a {
 }
 
 button {
+    background-color: var(--green);
+    color: var(--black);
     border: 0;
     border-radius: var(--border-radius);
     padding: 12px 24px;
+}
+
+button[disabled] {
+    opacity: .5;
+    pointer-events: none;
 }
 
 button:hover {

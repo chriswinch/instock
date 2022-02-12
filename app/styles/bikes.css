@@ -13,7 +13,7 @@
 
 .bikes__list {
     padding: 0 30px;
-    margin: 0 auto 100px;
+    margin: 0 auto 50px;
     max-width: 1200px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -36,4 +36,24 @@
 
 .bikes__list-item-info-price {
     font-size: 1.2rem;
+}
+
+.bikes__pagination {
+    margin: 0 auto 100px;
+    max-width: 1200px;
+    display: flex;
+    padding: 0 30px;
+}
+
+.bikes__pagination button {
+    margin-right: 16px;
+}
+
+.bikes__empty {
+    max-width: 1200px;
+    padding: 30px;
+    margin: 0 auto 100px;
+    text-align: center;
+    width: 100%;
+    font-size: 2.5rem;
 }
