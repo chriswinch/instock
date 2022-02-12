@@ -1,4 +1,4 @@
-# In Stock ( WIP )
+# In Stock ( https://instock.bike | WIP )
 
 A directory to let you find bikes that are in stock right now.
 
