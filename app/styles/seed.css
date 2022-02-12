@@ -1,0 +1,17 @@
+.seed {
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 30px auto 70px;
+}
+
+.seed__list-wrapper {
+    margin-bottom: 30px;
+}
+
+.seed__list {
+    margin-top: 15px;
+}
+
+.seed__list button {
+    margin-right: 15px;
+}

@@ -6,57 +6,75 @@ import puppeteer from 'puppeteer-core';
 import leisureLakes from './leisurelakes';
 
 const prisma = new PrismaClient();
+interface Urls {
+    [key: string]: {
+        [key: string]: string;
+    };
+}
+
+const urls: Urls = {
+    leisurelakes: {
+        'mountain-bikes': 'https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock',
+        'hybrid-bikes': 'https://www.leisurelakesbikes.com/bikes/hybrid-bikes/instock',
+        'road-bikes': 'https://www.leisurelakesbikes.com/road-bike/bikes/road-racing-bikes/instock',
+    },
+}
 
 /**
  * Can't get this to run on netlify
  * Similar issue to https://answers.netlify.com/t/memory-usage-puppeteer-function-or-repo-based/5613
  */
-
-const urls = {
-    leisurelakes: {
-        'mountain-bikes': 'https://www.leisurelakesbikes.com/mountain-bike/bikes/full-suspension-mountain-bikes/instock',
-    }
-}
-
 const handler: Handler = async (event, context) => {
-    let browser = null;
-    try {
-        browser = await puppeteer.launch({
-            args: [
-                '--disable-features=AudioServiceOutOfProcess'
-            ],
-            executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath,
-            headless: chromium.headless
-        });
+    if (
+        event.queryStringParameters &&
+        event.queryStringParameters.type &&
+        event.queryStringParameters.store
+    ) {
+        const qs = event.queryStringParameters;
+        if (qs.type && qs.store) {
+            const store = qs.store;
+            const type = qs.type;
 
-        let page = await browser.newPage();
+            let browser = null;
+            try {
+                browser = await puppeteer.launch({
+                    args: [
+                        '--disable-features=AudioServiceOutOfProcess'
+                    ],
+                    executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath,
+                    headless: false
+                });
 
-        await page.goto(urls['leisurelakes']['mountain-bikes']);
+                let page = await browser.newPage();
 
-        const results = await leisureLakes(page);
-        await prisma.bike.deleteMany({
-            where: {
-                store: 'leisurelakes',
-                type: 'mountain-bikes'
+                await page.goto(urls[store][type]);
+
+                const results = await leisureLakes(page, type);
+                await prisma.bike.deleteMany({
+                    where: {
+                        store,
+                        type
+                    }
+                })
+                await prisma.bike.createMany({ data: results });
+            } catch (err) {
+                let message = '';
+                if (err instanceof Error) {
+                    message = err.message;
+                } else if (typeof err === 'string') {
+                    message = err;
+                }
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({
+                        error: message
+                    })
+                }
+            } finally {
+                if (browser !== null) {
+                    await browser.close();
+                }
             }
-        })
-        await prisma.bike.createMany({ data: results });
-    } catch (err) {
-        let message = '';
-        if (err instanceof Error) {
-            message = err.message;
-        } else if (typeof err === 'string') {
-            message = err;
-        }
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                error: message
-            })
-        }
-    } finally {
-        if (browser !== null) {
-            await browser.close();
         }
     }
 
