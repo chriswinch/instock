@@ -10,4 +10,5 @@ TODO:
 - [ ] Add select dropdowns to brand, price and type
 - [ ] Add more content to homepage
 - [ ] Add more bike shop scrapers, improve scraper code
-- [ ] Get puppeteer running in lambda function on netlify or move scrapers to new service using node-cron in express
+- [ ] Get puppeteer running in lambda function on netlify or move scrapers to new service using node-cron in express.
+- [ ] Try Playwright to solve the item above. I see Brian Vaughn had success here: https://github.com/bvaughn/planner/blob/main/pages/api/ogimage.js

@@ -11,13 +11,29 @@
     font-weight: 700;
 }
 
-
-
 .bikes__list {
     padding: 0 30px;
     margin: 0 auto 100px;
     max-width: 1200px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 30px;
+}
+
+.bikes__list-item {
+    font-size: .9rem;
+    text-decoration: none;
+    margin-bottom: 30px;
+}
+
+.bikes__list-item-image img {
+    width: 100%;
+}
+
+.bikes__list-item-info {
+    margin-top: 16px;
+}
+
+.bikes__list-item-info-price {
+    font-size: 1.2rem;
 }

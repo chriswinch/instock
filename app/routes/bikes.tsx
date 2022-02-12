@@ -71,8 +71,8 @@ export default function Bikes() {
                             <img src={bike.photo} alt={bike.title} />
                         </div>
                         <div className="bikes__list-item-info">
-                            <h3 className="bikes__list-item-info-title">{bike.title}</h3>
                             <p className="bikes__list-item-info-price">{bike.priceAsString}</p>
+                            <h3 className="bikes__list-item-info-title">{bike.title}</h3>
                         </div>
                     </a>
                 ))}
